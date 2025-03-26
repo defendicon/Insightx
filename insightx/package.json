@@ -8,6 +8,12 @@
   },
   "scripts": {
     "build": "node esbuild --production --apps insightx --run-build-command",
-    "dev": "node esbuild --apps insightx --run-build-command"
+    "dev": "node esbuild --apps insightx --run-build-command",
+    "production": "node esbuild --production --apps insightx --run-build-command"
+  },
+  "esbuild": {
+    "entry_points": {
+      "insightx": "./insightx/public/js/index.js"
+    }
   }
 } 
