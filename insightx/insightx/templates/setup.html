@@ -1,0 +1,74 @@
+{% extends "templates/web.html" %}
+
+{% block page_content %}
+<div class="setup-container">
+    <div class="setup-box">
+        <h1 class="setup-title">Welcome to InsightX</h1>
+        <p class="setup-description">Please configure your ERPNext connection to get started.</p>
+        
+        {% if not credentials_set %}
+        <div class="setup-form">
+            <form action="/api/method/insightx.insightx.doctype.erpnext_credentials.erpnext_credentials.ERPNextCredentials.save" method="POST">
+                <div class="form-group">
+                    <label for="erpnext_url">ERPNext URL</label>
+                    <input type="text" class="form-control" id="erpnext_url" name="erpnext_url" 
+                           placeholder="http://your-erpnext-instance" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="api_key">API Key</label>
+                    <input type="password" class="form-control" id="api_key" name="api_key" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="api_secret">API Secret</label>
+                    <input type="password" class="form-control" id="api_secret" name="api_secret" required>
+                </div>
+                
+                <div class="form-group">
+                    <button type="button" class="btn btn-secondary" onclick="testConnection()">Test Connection</button>
+                    <button type="submit" class="btn btn-primary">Save & Continue</button>
+                </div>
+            </form>
+        </div>
+        {% else %}
+        <div class="setup-success">
+            <i class="fa fa-check-circle"></i>
+            <h2>Setup Complete!</h2>
+            <p>Your ERPNext connection is configured successfully.</p>
+            <a href="/dashboard" class="btn btn-primary">Go to Dashboard</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+function testConnection() {
+    frappe.call({
+        method: 'insightx.insightx.doctype.erpnext_credentials.erpnext_credentials.ERPNextCredentials.test_connection',
+        args: {
+            'erpnext_url': $('#erpnext_url').val(),
+            'api_key': $('#api_key').val(),
+            'api_secret': $('#api_secret').val()
+        },
+        callback: function(r) {
+            if (r.exc) {
+                frappe.msgprint({
+                    title: __('Error'),
+                    indicator: 'red',
+                    message: r.exc
+                });
+            } else {
+                frappe.msgprint({
+                    title: __('Success'),
+                    indicator: 'green',
+                    message: __('Connection successful!')
+                });
+            }
+        }
+    });
+}
+</script>
+{% endblock %} 
