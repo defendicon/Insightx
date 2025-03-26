@@ -30,6 +30,13 @@ class ERPNextCredentials(Document):
 
     def on_update(self):
         """Update system settings with credentials"""
+        if not frappe.db.exists("InsightX Settings", "InsightX Settings"):
+            settings = frappe.get_doc({
+                "doctype": "InsightX Settings",
+                "name": "InsightX Settings"
+            })
+            settings.insert()
+            
         frappe.db.set_value("InsightX Settings", "InsightX Settings", "erpnext_url", self.erpnext_url)
         frappe.db.set_value("InsightX Settings", "InsightX Settings", "api_key", self.api_key)
         frappe.db.set_value("InsightX Settings", "InsightX Settings", "api_secret", self.api_secret) 

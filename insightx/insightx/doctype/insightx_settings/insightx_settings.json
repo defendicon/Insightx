@@ -8,32 +8,26 @@
  "field_order": [
   "erpnext_url",
   "api_key",
-  "api_secret",
-  "test_connection"
+  "api_secret"
  ],
  "fields": [
   {
    "fieldname": "erpnext_url",
    "fieldtype": "Data",
    "label": "ERPNext URL",
-   "placeholder": "http://your-erpnext-instance"
+   "read_only": 1
   },
   {
    "fieldname": "api_key",
    "fieldtype": "Data",
    "label": "API Key",
-   "password": 1
+   "read_only": 1
   },
   {
    "fieldname": "api_secret",
    "fieldtype": "Data",
    "label": "API Secret",
-   "password": 1
-  },
-  {
-   "fieldname": "test_connection",
-   "fieldtype": "Button",
-   "label": "Test Connection"
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
@@ -42,7 +36,7 @@
  "modified": "2024-01-20 10:00:00.000000",
  "modified_by": "Administrator",
  "module": "InsightX",
- "name": "ERPNext Credentials",
+ "name": "InsightX Settings",
  "owner": "Administrator",
  "permissions": [
   {
